@@ -27,27 +27,40 @@ echo ======================================================\n
 echo Running all tests..."\n\n
 
 # Example test:
-test "PINA: 0x01 => PORTB: 0x01"
-set led_ Tick
+test "PINA: 0x01, 0x01, 0x01 => PORTB: 0x02"
 set state = start
 setPINA 0x01
 continue 2
-expectPORTB 
-expect state led1
+setPINA 0x01
+continue 2
+setPINA 0x01
+continue 2
+expectPORTB 0x02
 checkResult
 
-test "PINA: 0x00 => PORTB: 0x00"
+test "PINA: 0x01, 0x01 => PORTB: 0x01"
+set state = start
+setPINA 0x01
+continue 2
+setPINA 0x01
+continue 2
+expectPORTB 0x01
+checkResult
+
+test "PINA: 0x00 => PORTB: 0x01"
+set state = start
 setPINA 0x00
 continue 2
-expectPORTB
+expectPORTB 0x01
 checkResult
 
-test "PINA: 0x00 => PORTB: 0x00"
-setPINA 0x00
+test "PINA: 0x01  => PORTB: 0x02"
+set state = start
+setPINA 0x01
 continue 2
-expectPORTB
-checkResult
-
+continue 2
+expectPORTB 0x02
+checkRESULT
 # Add tests below
 
 # Report on how many tests passed/tests ran

@@ -1,7 +1,7 @@
-/*	Author: dpere048
+/*	Author: David Perez dpere048@ucr.edu
  *  Partner(s) Name: 
- *	Lab Section:
- *	Assignment: Lab #  Exercise #
+ *	Lab Section: 022
+ *	Assignment: Lab4 #  Exercise #1
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -11,41 +11,46 @@
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
-enum States{start, led0, wait, led1} state;
+enum States{start, led1, wait, led0} state;
 unsigned char button;
 unsigned char tmpA;
 void led_Tick(){
 	switch(state){
-		if(button ==1){ //if button is pressed, state turns on led pb1
+	case start:
+		if(button == 1){ //if button is pressed, state turns on led pb1
 			state = led1;
 		}
-		else //if no button is pressed, remains in start
+		else{ //if no button is pressed, remains in start
 			state = start;
+		}
 		break;
 	case led1:
 		if(button == 1){
-			state = led1;
+			state = led0;
 		}
-		else
+		else{
 			state = wait;
+		}
 		break;
 	case wait:
 		if(button == 1){ //button pressed siwtches back to led0
 			state = led0;
 		}
-		else 
+		else{ 
 			state = wait;
+		}
 		break;
 	case led0:
 		if(button == 1){
-			state = led0;
+			state = led1; //switches leds
 		}
-		else
-			state = start; //starts back at start
+		else{
+			state = start; //stays at start
+		}
 		break;
 	}
 	switch(state){
-		case init:
+		case start:
 			tmpA = 0x01;
 			break;
 		case led1:
@@ -53,8 +58,9 @@ void led_Tick(){
 			break;
 		case wait:
 			tmpA = 0x02; //when waiting, tmpA is still 0x02
+			break;
 		case led0:
-			tmpA = 0x01;  //when back to led0, tmpA =is 0x01
+			tmpA = 0x01;  //when ld1  tmpA =is 0x01
 			break;
 	}
 }
